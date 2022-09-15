@@ -6,6 +6,8 @@ on:
 jobs:
   scan_project:
     runs-on: ubuntu-latest
+    outputs:
+      stacks: ${{ steps.publish.outputs.result }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,4 +36,34 @@ jobs:
               return element !== '';
             });
 
-            console.log(added_and_updated_stacks_clean)
+            return added_and_updated_stacks_clean
+
+  # Run preview on each of the stacks (This spins up an individual job per stack)
+  preview_stack:
+    runs-on: ubuntu-latest
+    needs:
+      - scan_project
+    strategy:
+      matrix:
+        stacks: ${{ fromJSON(needs.scan_project.outputs.stacks) }}
+    steps:
+      - name:  Preview Stack
+        run: |
+          # Would run Pulumi preview here
+          echo ${{ matrix.stacks }}
+      - name: Publish Project Changes
+        id: publish
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+                Pulumi preview was executed since changes were detected that are associated with this stack:
+                
+                📝 Pulumi Stack : ${{ matrix.stacks }}
+                🔗 Pulumi Preview : See action logs to see the preview output
+              `
+            })
