@@ -27,6 +27,8 @@ jobs:
             updated_stacks = `${{steps.changed-files.outputs.added_files}}`
             added_stacks = `${{steps.changed-files.outputs.modified_files}}`
 
+            console.log(added_stacks)
+
             const updated_stacks_list = updated_stacks.split(" ");
             const added_stacks_list = added_stacks.split(" ");
 
