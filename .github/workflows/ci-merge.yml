@@ -7,12 +7,8 @@ on:
       - 'pulumi/project_config/**'
       - 'pulumi/project_code/**'
 jobs:
-
-  # Get associated PR
   scan_project:
     runs-on: ubuntu-latest
-    outputs:
-      stacks: ${{ steps.publish.outputs.result }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
