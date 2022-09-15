@@ -30,4 +30,8 @@ jobs:
 
             const added_and_updated_stacks = updated_stacks_list.concat(added_stacks_list)
 
-            console.log(added_and_updated_stacks)
+            const added_and_updated_stacks_clean = added_and_updated_stacks.filter(element => {
+              return element !== '';
+            });
+
+            console.log(added_and_updated_stacks_clean)
