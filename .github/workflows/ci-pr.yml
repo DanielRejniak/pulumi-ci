@@ -28,5 +28,6 @@ jobs:
             const updated_stacks_list = updated_stacks.split(" ");
             const added_stacks_list = added_stacks.split(" ");
 
-            console.log(updated_stacks_list)
-            console.log(added_stacks_list)
+            const added_and_updated_stacks = updated_stacks_list.concat(added_stacks_list)
+
+            console.log(added_and_updated_stacks)
