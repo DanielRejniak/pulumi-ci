@@ -25,5 +25,5 @@ jobs:
             updated_stacks = `${{steps.changed-files.outputs.added_files}}`
             added_stacks = `${{steps.changed-files.outputs.modified_files}}`
 
-            console.log(updated_stacks)
-            console.log(added_stacks)
+            console.log(updated_stacks.length)
+            console.log(added_stacks.length)
