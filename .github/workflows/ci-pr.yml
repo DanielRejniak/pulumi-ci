@@ -22,8 +22,5 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            updated_stacks = ${{steps.changed-files.outputs.added_files}}
-            added_stacks = ${{steps.changed-files.outputs.modified_files}}
-
-            console.log(updated_stacks)
-            console.log(added_stacks)
+            console.log(context)
+            console.log(github)
