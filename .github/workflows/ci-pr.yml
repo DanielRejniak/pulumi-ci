@@ -1,0 +1,28 @@
+name: ci-pr
+on: 
+  pull_request:
+    branches:
+    - main
+    paths:
+      - 'pulumi/project_config/**'
+      - 'pulumi/project_code/**'
+jobs:
+
+  # Generate matrix
+  scan_project:
+    runs-on: ubuntu-latest
+    outputs:
+      stacks: ${{ steps.publish.outputs.result }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.7
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done

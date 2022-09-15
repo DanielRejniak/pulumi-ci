@@ -1,0 +1,8 @@
+name: project-a
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: This is the main pulumi project with decoupled stack config.
+backend:
+  url: azblob://mai-aia-poc

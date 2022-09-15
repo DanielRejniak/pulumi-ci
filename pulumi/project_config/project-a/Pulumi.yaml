@@ -1,0 +1,9 @@
+name: project-a
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: This is a default test development project.
+main: ../../project_code/pulumi/projects/project-a
+backend:
+  url: azblob://mai-aia-poc

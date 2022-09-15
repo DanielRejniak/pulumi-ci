@@ -1,0 +1,4 @@
+encryptionsalt: v1:/FNHGGIX6IY=:v1:ZPMUqQtwzijUfwz8:XKkw98XWBKklbBe86sXVdmi5qLwJng==
+config:
+  project-a:resource_group_name: aia-dev-eastus2-cloudsvc
+  project-a:storage_account_name: maipocdeployproject
