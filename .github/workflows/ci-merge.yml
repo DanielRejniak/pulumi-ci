@@ -35,18 +35,16 @@ jobs:
   # Run preview on each of the stacks (This spins up an individual job per stack)
   preview_stack:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ matrix.environment }} 
     needs:
       - scan_project
     strategy:
       matrix:
-        stacks: ['foo',"bar"]
-        environment: [staging, production]
         include:
-          - stacks: foo
-            environment: production
-          - stacks: bar
-            environment: staging
+          - stacks: "foo"
+            environment: "production"
+          - stacks: "bar"
+            environment: "staging"
     steps:
       - name:  Preview Stack
         run: |
