@@ -18,25 +18,19 @@ jobs:
         uses: tj-actions/changed-files@v29.0.7
         with:
           files: |
-            pulumi/project_config/project-*/Pulumi.*.yaml
+            pulumi/project_config/*/Pulumi.*.yaml
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
       - name: Generate stack list
         id: publish
         uses: actions/github-script@v6
         with:
           script: |
-            updated_stacks = `${{steps.changed-files.outputs.added_files}}`
-            added_stacks = `${{steps.changed-files.outputs.modified_files}}`
-
-            const updated_stacks_list = updated_stacks.split(" ");
-            const added_stacks_list = added_stacks.split(" ");
-
-            const added_and_updated_stacks = updated_stacks_list.concat(added_stacks_list)
-
-            const added_and_updated_stacks_clean = added_and_updated_stacks.filter(element => {
-              return element !== '';
-            });
-
-            return added_and_updated_stacks_clean
+            changed_stacks = `${{steps.changed-files.outputs.all_changed_files}}`
+            return changed_stacks.split(" ");
 
   # Run preview on each of the stacks (This spins up an individual job per stack)
   preview_stack:
@@ -46,7 +40,11 @@ jobs:
       - scan_project
     strategy:
       matrix:
-        stacks: ${{ fromJSON(needs.scan_project.outputs.stacks) }}
+        include:
+          - stacks: "foo"
+            environment: "production"
+          - stacks: "bar"
+            environment: "staging"
     steps:
       - name:  Preview Stack
         run: |
