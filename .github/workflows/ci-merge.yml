@@ -41,6 +41,7 @@ jobs:
   # Run preview on each of the stacks (This spins up an individual job per stack)
   preview_stack:
     runs-on: ubuntu-latest
+    environment: production
     needs:
       - scan_project
     strategy:
