@@ -32,7 +32,6 @@ jobs:
             changed_stacks = `${{steps.changed-files.outputs.all_changed_files}}`
             return changed_stacks.split(" ");
 
-  # Run preview on each of the stacks (This spins up an individual job per stack)
   preview_stack:
     runs-on: ubuntu-latest
     environment: production
@@ -40,13 +39,9 @@ jobs:
       - scan_project
     strategy:
       matrix:
-        include:
-          - stacks: "foo"
-            environment: "production"
-          - stacks: "bar"
-            environment: "staging"
+        stacks: ${{ fromJSON(needs.scan_project.outputs.stacks) }}
     steps:
       - name:  Preview Stack
         run: |
-          # Would run Pulumi up here
+          # Would run Pulumi preview here
           echo ${{ matrix.stacks }}
