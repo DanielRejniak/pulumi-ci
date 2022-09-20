@@ -40,11 +40,7 @@ jobs:
       - scan_project
     strategy:
       matrix:
-        include:
-          - stacks: "foo"
-            environment: "production"
-          - stacks: "bar"
-            environment: "staging"
+        stacks: ${{ fromJSON(needs.scan_projects.outputs.stacks) }}
     steps:
       - name:  Preview Stack
         run: |
