@@ -45,19 +45,3 @@ jobs:
         run: |
           # Would run Pulumi preview here
           echo ${{ matrix.stacks }}
-      - name: Publish Project Changes
-        id: publish
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `
-                Pulumi preview was executed since changes were detected that are associated with this stack:
-                
-                📝 Pulumi Stack : ${{ matrix.stacks }}
-                🔗 Pulumi Preview : See action logs to see the preview output
-              `
-            })
